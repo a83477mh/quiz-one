@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF7F2">
+<meta name="description" content="20 个日常场景，测测你的边界是门帘还是院墙。趣味测评，仅供娱乐参考。">
+<title>你的边界感，是门帘还是院墙</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ========== 屏 1 · 密码 ========== -->
+  <section class="screen is-active" id="screen-gate">
+    <div class="gate">
+      <div class="gate__mark">趣味测评 · VOL.01</div>
+      <h1 class="gate__title">你的边界感，<br><em>是门帘还是院墙</em></h1>
+      <p class="gate__desc">20 个生活里真会碰上的场景。<br>凭第一直觉选，大概 3 分钟。</p>
+
+      <div class="gate__card">
+        <label class="gate__label" for="code">输入测试密码</label>
+        <input class="gate__input" id="code" type="text" inputmode="text"
+               autocomplete="off" autocapitalize="characters" autocorrect="off"
+               spellcheck="false" placeholder="例如 ML2486" maxlength="24">
+        <p class="gate__hint" id="gate-hint">一个密码可以测 3 次。</p>
+        <button class="btn btn--primary" id="btn-start" type="button">开始测试</button>
+        <button class="btn btn--text" id="btn-resume" type="button" hidden>接着上次的答下去</button>
+      </div>
+
+      <p class="gate__foot">别选「应该怎么做」，选你真会做的那个。</p>
+    </div>
+  </section>
+
+  <!-- ========== 屏 2 · 答题 ========== -->
+  <section class="screen" id="screen-quiz">
+    <header class="quiz__top">
+      <button class="linkbtn" id="btn-back" type="button">← 上一题</button>
+      <span class="quiz__count" id="quiz-count">1 / 20</span>
+    </header>
+    <div class="progress"><div class="progress__bar" id="progress-bar"></div></div>
+
+    <div class="quiz__body">
+      <div class="quiz__dim" id="quiz-dim"></div>
+      <h2 class="quiz__q" id="quiz-q"></h2>
+      <div class="options" id="options" role="group" aria-label="选项"></div>
+      <p class="quiz__tip">选你真会干的那个 · 随时可以返回改</p>
+    </div>
+  </section>
+
+  <!-- ========== 屏 3 · 结果 ========== -->
+  <section class="screen" id="screen-result">
+    <div id="result-root"></div>
+  </section>
+
+</div>
+
+<!-- ========== 长图预览 ========== -->
+<div class="overlay" id="poster-overlay" hidden>
+  <div class="overlay__bar">
+    <span id="poster-tip">长按图片保存到相册</span>
+    <button class="linkbtn linkbtn--light" id="btn-poster-close" type="button">关闭</button>
+  </div>
+  <div class="overlay__scroll"><img id="poster-img" alt="测评结果长图"></div>
+  <div class="overlay__actions">
+    <button class="btn btn--primary" id="btn-poster-download" type="button">保存图片</button>
+    <button class="btn btn--ghost" id="btn-poster-share" type="button" hidden>用系统分享</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="quiz-data.js"></script>
+<script src="site-config.js"></script>
+<script src="access.js"></script>
+<script src="poster.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
