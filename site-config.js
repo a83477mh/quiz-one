@@ -8,7 +8,7 @@
  */
 window.SiteConfig = {
   // Supabase 项目地址，形如 https://xxxx.supabase.co
-  SUPABASE_URL: "https://nrzudsaspluxgfbsyhts.supabase.co",
+  SUPABASE_URL: "https://nrzudsasplxugfbsyhts.supabase.co",
 
   // Supabase 公开 publishable key（Project Settings → API Keys → Publishable key）
   SUPABASE_ANON_KEY: "sb_publishable_W6ib-LMvan8_N7J-HQv8fA_m80HUKrT",
