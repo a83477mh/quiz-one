@@ -117,11 +117,21 @@
     renderQuestion();
   }
 
+  /* 失败原因分开报，别把「连不上服务器」说成「密码不对」 */
+  function failHint(reason) {
+    if (reason === 'empty') return '先输入密码再开始吧。';
+    if (reason === 'config') return '网站还没配好，联系站长。';
+    if (reason === 'network') return '连不上服务器，检查一下网络再试一次。';
+    if (reason === 'exhausted') return '这个密码的次数已经用完了，换一个试试。';
+    if (reason === 'revoked') return '这个密码已经停用了，换一个试试。';
+    return '这个密码不对，再检查一下？';
+  }
+
   function start() {
     var code = $('code').value;
     A.verify(code).then(function (v) {
       if (!v.ok) {
-        setHint(v.reason === 'empty' ? '先输入密码再开始吧。' : '这个密码不对，再检查一下？', 'error');
+        setHint(failHint(v.reason), 'error');
         return;
       }
       var session = A.getSession();
@@ -136,14 +146,16 @@
       }
       A.consume(v.key).then(function (used) {
         if (!used.ok) {
-          setHint('次数用完了，换一个密码试试。', 'error');
+          setHint(failHint(used.reason), 'error');
           return;
         }
         setHint('开始吧，还剩 ' + used.remaining + ' 次。', 'ok');
         beginFresh(v.key);
+      }).catch(function () {
+        setHint('连不上服务器，检查一下网络再试一次。', 'error');
       });
     }).catch(function () {
-      setHint('网络好像有点问题，稍后再试一次。', 'error');
+      setHint('连不上服务器，检查一下网络再试一次。', 'error');
     });
   }
 
@@ -349,7 +361,7 @@
     if (!key) { showGate(); return; }
     A.consume(key).then(function (used) {
       if (!used.ok) {
-        toast('这个密码的 3 次用完了，换一个吧');
+        toast(used.reason === 'network' ? '连不上服务器，检查一下网络再试一次。' : '次数用完了，换一个密码试试。');
         showGate();
         return;
       }
